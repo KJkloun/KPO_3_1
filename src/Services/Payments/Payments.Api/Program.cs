@@ -106,7 +106,7 @@ if (connectionString != "InMemory")
         {
             using var handlerScope = app.Services.CreateScope();
             var orderHandler = handlerScope.ServiceProvider.GetRequiredService<OrderCreatedHandler>();
-            await orderHandler.HandleOrderCreated(message);
+            await orderHandler.Handle(message);
         });
     });
 }

@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Payments.Application.Services;
 using Payments.Infrastructure.Data;
@@ -34,5 +35,25 @@ public class OutboxService : IOutboxService
 
         _logger.LogInformation("Outbox message {MessageId} of type {MessageType} saved", 
             outboxMessage.Id, typeof(T).Name);
+    }
+
+    public async Task<IEnumerable<OutboxMessage>> GetUnprocessedMessagesAsync(CancellationToken cancellationToken = default)
+    {
+        return await _context.OutboxMessages
+            .Where(m => !m.ProcessedAt.HasValue)
+            .OrderBy(m => m.CreatedAt)
+            .ToListAsync(cancellationToken);
+    }
+
+    public async Task MarkAsProcessedAsync(Guid messageId, CancellationToken cancellationToken = default)
+    {
+        var message = await _context.OutboxMessages
+            .FirstOrDefaultAsync(m => m.Id == messageId, cancellationToken);
+
+        if (message != null)
+        {
+            message.ProcessedAt = DateTime.UtcNow;
+            await _context.SaveChangesAsync(cancellationToken);
+        }
     }
 } 

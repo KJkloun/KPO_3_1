@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Shop | Микросервисная платформа</title>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #007AFF;
+            --primary-hover: #0051D5;
+            --success: #30D158;
+            --warning: #FF9F0A;
+            --error: #FF3B30;
+            --text-primary: #1C1C1E;
+            --text-secondary: #8E8E93;
+            --text-tertiary: #C7C7CC;
+            --background: #FFFFFF;
+            --background-secondary: #F2F2F7;
+            --background-elevated: #FFFFFF;
+            --separator: #E5E5EA;
+            --fill: #F2F2F7;
+            --border-radius: 12px;
+            --border-radius-large: 16px;
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--background-secondary);
+            color: var(--text-primary);
+            line-height: 1.5;
+            font-size: 17px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-lg);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+            padding: var(--spacing-xl) 0;
+        }
+
+        .header h1 {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-sm);
+            letter-spacing: -0.02em;
+        }
+
+        .header p {
+            font-size: 19px;
+            color: var(--text-secondary);
+            font-weight: 400;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .status-card {
+            background: var(--background-elevated);
+            border: 1px solid var(--separator);
+            border-radius: var(--border-radius);
+            padding: var(--spacing-md);
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .status-card:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            font-weight: 500;
+            font-size: 15px;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--success);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .status-card p {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .status-card a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .user-display {
+            background: var(--background-elevated);
+            border: 1px solid var(--separator);
+            border-radius: var(--border-radius);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+            text-align: center;
+            font-size: 15px;
+            color: var(--text-secondary);
+        }
+
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .service-card {
+            background: var(--background-elevated);
+            border: 1px solid var(--separator);
+            border-radius: var(--border-radius-large);
+            padding: var(--spacing-lg);
+            transition: all 0.2s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .service-header {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .service-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .service-icon.payments {
+            background: linear-gradient(135deg, var(--primary), #5856D6);
+        }
+
+        .service-icon.orders {
+            background: linear-gradient(135deg, var(--success), #32D74B);
+        }
+
+        .service-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
+        .service-subtitle {
+            font-size: 15px;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .balance-display {
+            background: linear-gradient(135deg, var(--primary), #5856D6);
+            color: white;
+            border-radius: var(--border-radius);
+            padding: var(--spacing-lg);
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+            display: none;
+        }
+
+        .balance-amount {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: var(--spacing-xs);
+            letter-spacing: -0.02em;
+        }
+
+        .balance-label {
+            opacity: 0.8;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .form-row {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .form-row > * {
+            flex: 1;
+        }
+
+        .input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--separator);
+            border-radius: var(--border-radius);
+            font-size: 17px;
+            background: var(--background);
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+        }
+
+        .input::placeholder {
+            color: var(--text-tertiary);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-xs);
+            padding: 12px 20px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 17px;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            min-height: 44px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: var(--fill);
+            color: var(--text-primary);
+            border: 1px solid var(--separator);
+        }
+
+        .btn-secondary:hover {
+            background: var(--separator);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #28CD4C;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .result {
+            margin-top: var(--spacing-md);
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius);
+            font-family: 'SF Mono', 'Monaco', monospace;
+            font-size: 14px;
+            display: none;
+            animation: slideIn 0.3s ease;
+            border: 1px solid;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result.success {
+            background: rgba(48, 209, 88, 0.1);
+            border-color: rgba(48, 209, 88, 0.3);
+            color: #1E4620;
+        }
+
+        .result.error {
+            background: rgba(255, 59, 48, 0.1);
+            border-color: rgba(255, 59, 48, 0.3);
+            color: #4A1515;
+        }
+
+        .result.warning {
+            background: rgba(255, 159, 10, 0.1);
+            border-color: rgba(255, 159, 10, 0.3);
+            color: #4A3300;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .footer {
+            text-align: center;
+            padding: var(--spacing-xl) 0;
+            color: var(--text-secondary);
+            font-size: 15px;
+            border-top: 1px solid var(--separator);
+            margin-top: var(--spacing-xl);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: var(--spacing-md);
+            }
+            
+            .header h1 {
+                font-size: 36px;
+            }
+            
+            .header p {
+                font-size: 17px;
+            }
+            
+            .services {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                flex-direction: column;
+            }
+
+            .service-header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* Убираем focus outline для accessibility но добавляем визуальную обратную связь */
+        button:focus-visible,
+        .input:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>E-Shop</h1>
+            <p>Микросервисная платформа электронной коммерции</p>
+        </header>
+
+        <div class="status-grid">
+            <div class="status-card">
+                <div class="status-indicator">
+                    <div class="status-dot"></div>
+                    <strong>API Gateway</strong>
+                </div>
+                <p>localhost:8080</p>
+            </div>
+            <div class="status-card">
+                <div class="status-indicator">
+                    <div class="status-dot"></div>
+                    <strong>RabbitMQ</strong>
+                </div>
+                <p><a href="http://localhost:15672" target="_blank">Management Console</a></p>
+            </div>
+            <div class="status-card">
+                <div class="status-indicator">
+                    <div class="status-dot"></div>
+                    <strong>SQL Server</strong>
+                </div>
+                <p>localhost:1433</p>
+            </div>
+        </div>
+
+        <div class="user-display" id="user-display">
+            Пользователь: <span id="current-user">Не выбран</span>
+        </div>
+
+        <div class="services">
+            <!-- Payments Service -->
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-icon payments">💳</div>
+                    <div>
+                        <div class="service-title">Payments</div>
+                        <div class="service-subtitle">Управление платежами</div>
+                    </div>
+                </div>
+
+                <div id="balance-display" class="balance-display">
+                    <div class="balance-amount" id="balance-amount">$0.00</div>
+                    <div class="balance-label">Текущий баланс</div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-row">
+                        <input type="text" id="create-user-id" class="input" placeholder="User ID" value="11111111-1111-1111-1111-111111111111">
+                        <button class="btn btn-secondary" onclick="generateUserId()">Новый ID</button>
+                    </div>
+                    <button class="btn btn-primary" onclick="createAccount()">
+                        <span id="create-loading" style="display: none;" class="loading"></span>
+                        Создать аккаунт
+                    </button>
+                    <div id="account-result" class="result"></div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-row">
+                        <input type="text" id="account-id" class="input" placeholder="User ID">
+                        <input type="number" id="amount" class="input" placeholder="Сумма" value="1000">
+                    </div>
+                    <button class="btn btn-success" onclick="topUpAccount()">
+                        <span id="topup-loading" style="display: none;" class="loading"></span>
+                        Пополнить
+                    </button>
+                    <div id="topup-result" class="result"></div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-row">
+                        <input type="text" id="balance-account-id" class="input" placeholder="User ID">
+                        <button class="btn btn-secondary" onclick="checkBalance()">
+                            <span id="balance-loading" style="display: none;" class="loading"></span>
+                            Проверить баланс
+                        </button>
+                    </div>
+                    <div id="balance-result" class="result"></div>
+                </div>
+            </div>
+
+            <!-- Orders Service -->
+            <div class="service-card">
+                <div class="service-header">
+                    <div class="service-icon orders">📦</div>
+                    <div>
+                        <div class="service-title">Orders</div>
+                        <div class="service-subtitle">Управление заказами</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-row">
+                        <input type="text" id="user-id" class="input" placeholder="User ID" value="11111111-1111-1111-1111-111111111111">
+                        <input type="number" id="order-amount" class="input" placeholder="Сумма" value="299.99">
+                    </div>
+                    <button class="btn btn-primary" onclick="createOrder()">
+                        <span id="order-loading" style="display: none;" class="loading"></span>
+                        Создать заказ
+                    </button>
+                    <div id="order-result" class="result"></div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-row">
+                        <input type="text" id="orders-user-id" class="input" placeholder="User ID" value="11111111-1111-1111-1111-111111111111">
+                        <button class="btn btn-secondary" onclick="getOrders()">
+                            <span id="orders-loading" style="display: none;" class="loading"></span>
+                            Мои заказы
+                        </button>
+                    </div>
+                    <div id="orders-result" class="result"></div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>Микросервисная архитектура • Clean Architecture • CQRS • Event Sourcing</p>
+        </footer>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8080';
+        let currentUser = null;
+
+        async function apiCall(method, endpoint, body = null, loadingElementId = null) {
+            const loadingElement = loadingElementId ? document.getElementById(loadingElementId) : null;
+            
+            if (loadingElement) {
+                loadingElement.style.display = 'inline-block';
+            }
+
+            try {
+                const options = {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                };
+                if (body) {
+                    options.body = JSON.stringify(body);
+                }
+                
+                const response = await fetch(API_BASE + endpoint, options);
+                let data = null;
+                const contentType = response.headers.get('content-type');
+                
+                if (contentType && contentType.includes('application/json')) {
+                    const text = await response.text();
+                    if (text) {
+                        data = JSON.parse(text);
+                    }
+                }
+                
+                return {
+                    status: response.status,
+                    statusText: response.statusText,
+                    data: data
+                };
+            } catch (error) {
+                return {
+                    status: 0,
+                    error: error.message
+                };
+            } finally {
+                if (loadingElement) {
+                    loadingElement.style.display = 'none';
+                }
+            }
+        }
+
+        function showResult(elementId, result) {
+            const element = document.getElementById(elementId);
+            element.style.display = 'block';
+            
+            if (result.error) {
+                element.className = 'result error';
+                element.textContent = `❌ Ошибка подключения: ${result.error}`;
+            } else if (result.status === 409) {
+                element.className = 'result warning';
+                element.textContent = `⚠️ Аккаунт уже существует\nИспользуйте другой User ID или работайте с существующим аккаунтом.`;
+            } else if (result.status >= 400) {
+                element.className = 'result error';
+                element.textContent = `❌ Ошибка ${result.status}: ${result.statusText}\n${result.data ? JSON.stringify(result.data, null, 2) : ''}`;
+            } else {
+                element.className = 'result success';
+                element.textContent = `✅ Успешно (${result.status})\n${result.data ? JSON.stringify(result.data, null, 2) : ''}`;
+            }
+        }
+
+        function updateCurrentUser(userId) {
+            currentUser = userId;
+            document.getElementById('current-user').textContent = userId;
+        }
+
+        function syncUserFields(userId) {
+            document.getElementById('create-user-id').value = userId;
+            document.getElementById('user-id').value = userId;
+            document.getElementById('orders-user-id').value = userId;
+            document.getElementById('account-id').value = userId;
+            document.getElementById('balance-account-id').value = userId;
+            updateCurrentUser(userId);
+        }
+
+        function generateUserId() {
+            const newUserId = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                const r = Math.random() * 16 | 0;
+                const v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+            syncUserFields(newUserId);
+        }
+
+        function updateBalanceDisplay(balance) {
+            const balanceDisplay = document.getElementById('balance-display');
+            const balanceAmount = document.getElementById('balance-amount');
+            
+            if (balance !== null && balance !== undefined) {
+                const numericBalance = parseFloat(balance);
+                if (!isNaN(numericBalance)) {
+                    balanceAmount.textContent = `$${numericBalance.toFixed(2)}`;
+                    balanceDisplay.style.display = 'block';
+                } else {
+                    balanceDisplay.style.display = 'none';
+                }
+            } else {
+                balanceDisplay.style.display = 'none';
+            }
+        }
+
+        async function createAccount() {
+            const userId = document.getElementById('create-user-id').value;
+            if (!userId) {
+                alert('Введите User ID');
+                return;
+            }
+            const result = await apiCall('POST', '/api/payments/accounts', { userId }, 'create-loading');
+            showResult('account-result', result);
+            if (result.status === 201) {
+                syncUserFields(userId);
+                setTimeout(() => checkBalance(), 500);
+            }
+        }
+
+        async function topUpAccount() {
+            const accountId = document.getElementById('account-id').value;
+            const amount = parseFloat(document.getElementById('amount').value);
+            if (!accountId) {
+                alert('Введите User ID');
+                return;
+            }
+            const result = await apiCall('POST', `/api/payments/accounts/${accountId}/top-up`, { amount }, 'topup-loading');
+            showResult('topup-result', result);
+            if (result.status === 200) {
+                setTimeout(() => checkBalance(), 500);
+            }
+        }
+
+        async function checkBalance() {
+            const accountId = document.getElementById('balance-account-id').value;
+            if (!accountId) {
+                alert('Введите User ID');
+                return;
+            }
+            const result = await apiCall('GET', `/api/payments/accounts/${accountId}/balance`, null, 'balance-loading');
+            showResult('balance-result', result);
+            
+            if (result.status === 200 && result.data !== null) {
+                updateBalanceDisplay(result.data.balance);
+            }
+        }
+
+        async function createOrder() {
+            const userId = document.getElementById('user-id').value;
+            const amount = parseFloat(document.getElementById('order-amount').value);
+            if (!userId) {
+                alert('Введите User ID');
+                return;
+            }
+            const result = await apiCall('POST', '/api/orders', { userId, amount, description: `Заказ на сумму $${amount}` }, 'order-loading');
+            showResult('order-result', result);
+            if (result.status === 202) {
+                setTimeout(() => {
+                    checkBalance();
+                    getOrders();
+                }, 1000);
+            }
+        }
+
+        async function getOrders() {
+            const userId = document.getElementById('orders-user-id').value;
+            if (!userId) {
+                alert('Введите User ID');
+                return;
+            }
+            const result = await apiCall('GET', `/api/orders?userId=${userId}`, null, 'orders-loading');
+            showResult('orders-result', result);
+        }
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', function() {
+            const userId = document.getElementById('create-user-id').value;
+            if (userId) {
+                updateCurrentUser(userId);
+            }
+        });
+    </script>
+</body>
+</html> 

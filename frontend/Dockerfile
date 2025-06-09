@@ -1,7 +1,7 @@
 FROM nginx:alpine
 
-# Копируем HTML файл
-COPY api-test.html /usr/share/nginx/html/index.html
+# Копируем новый HTML файл с красивым дизайном
+COPY index.html /usr/share/nginx/html/index.html
 
 # Копируем конфигурацию nginx
 COPY nginx.conf /etc/nginx/nginx.conf
