@@ -4,7 +4,6 @@ using Payments.Application.Services;
 using Payments.Domain.Repositories;
 using Payments.Domain.Entities;
 using Shared.Contracts.Messages;
-using Shared.Infrastructure.MessageBus;
 
 namespace Payments.Application.MessageHandlers;
 
@@ -13,7 +12,7 @@ namespace Payments.Application.MessageHandlers;
 /// АЛГОРИТМ: Получили заказ → проверяем дубли → списываем деньги → логируем.
 /// Использую Transactional Inbox для предотвращения дублей обработки.
 /// </summary>
-public class OrderCreatedHandler : IMessageHandler<OrderCreated>
+public class OrderCreatedHandler
 {
     private readonly IAccountRepository _accountRepository;
     private readonly ITransactionRepository _transactionRepository;
@@ -65,11 +64,11 @@ public class OrderCreatedHandler : IMessageHandler<OrderCreated>
             }
 
             // STEP 4: Списываем деньги (бизнес-логика в доменной модели)
-            var withdrawResult = account.TryWithdraw(message.Amount);
-            if (!withdrawResult.Success)
+            var withdrawalSuccess = account.TryWithdraw(message.Amount);
+            if (!withdrawalSuccess)
             {
-                _logger.LogWarning("Withdrawal failed for order {OrderId}: {Reason}",
-                    message.OrderId, withdrawResult.Error);
+                _logger.LogWarning("Withdrawal failed for order {OrderId}: Insufficient balance. Current balance: {Balance}, Required: {Amount}",
+                    message.OrderId, account.Balance, message.Amount);
                 return;
             }
 
