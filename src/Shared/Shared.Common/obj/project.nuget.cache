@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "l2vHxE6Xymg=",
+  "success": true,
+  "projectFilePath": "/Users/kj/KPO/KPO_3/src/Shared/Shared.Common/Shared.Common.csproj",
+  "expectedPackageFiles": [
+    "/Users/kj/.nuget/packages/fluentvalidation/11.9.0/fluentvalidation.11.9.0.nupkg.sha512",
+    "/Users/kj/.nuget/packages/mediatr/12.2.0/mediatr.12.2.0.nupkg.sha512",
+    "/Users/kj/.nuget/packages/mediatr.contracts/2.0.1/mediatr.contracts.2.0.1.nupkg.sha512",
+    "/Users/kj/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/8.0.0/microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
+    "/Users/kj/.nuget/packages/microsoft.extensions.logging.abstractions/8.0.0/microsoft.extensions.logging.abstractions.8.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,12 @@
+/Users/kj/KPO/KPO_3/src/Shared/Shared.Contracts/bin/Debug/net8.0/Shared.Contracts.deps.json
+/Users/kj/KPO/KPO_3/src/Shared/Shared.Contracts/bin/Debug/net8.0/Shared.Contracts.dll
+/Users/kj/KPO/KPO_3/src/Shared/Shared.Contracts/bin/Debug/net8.0/Shared.Contracts.pdb
+/Users/kj/KPO/KPO_3/src/Shared/Shared.Contracts/obj/Debug/net8.0/Shared.Contracts.GeneratedMSBuildEditorConfig.editorconfig
+/Users/kj/KPO/KPO_3/src/Shared/Shared.Contracts/obj/Debug/net8.0/Shared.Contracts.AssemblyInfoInputs.cache
+/Users/kj/KPO/KPO_3/src/Shared/Shared.Contracts/obj/Debug/net8.0/Shared.Contracts.AssemblyInfo.cs
+/Users/kj/KPO/KPO_3/src/Shared/Shared.Contracts/obj/Debug/net8.0/Shared.Contracts.csproj.CoreCompileInputs.cache
+/Users/kj/KPO/KPO_3/src/Shared/Shared.Contracts/obj/Debug/net8.0/Shared.Contracts.sourcelink.json
+/Users/kj/KPO/KPO_3/src/Shared/Shared.Contracts/obj/Debug/net8.0/Shared.Contracts.dll
+/Users/kj/KPO/KPO_3/src/Shared/Shared.Contracts/obj/Debug/net8.0/refint/Shared.Contracts.dll
+/Users/kj/KPO/KPO_3/src/Shared/Shared.Contracts/obj/Debug/net8.0/Shared.Contracts.pdb
+/Users/kj/KPO/KPO_3/src/Shared/Shared.Contracts/obj/Debug/net8.0/ref/Shared.Contracts.dll
