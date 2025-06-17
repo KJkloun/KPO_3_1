@@ -1,0 +1,77 @@
+services:
+  # Infrastructure
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong@Passw0rd
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
+  # Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - api-gateway
+
+  # API Gateway
+  api-gateway:
+    build:
+      context: .
+      dockerfile: src/Gateway/ApiGateway/Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ReverseProxy__Clusters__orders-cluster__Destinations__orders-api__Address=http://orders-api:8080/
+      - ReverseProxy__Clusters__payments-cluster__Destinations__payments-api__Address=http://payments-api:8080/
+    depends_on:
+      - orders-api
+      - payments-api
+
+  # Orders Service
+  orders-api:
+    build:
+      context: .
+      dockerfile: src/Services/Orders/Orders.Api/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=OrdersDb;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=true;
+      - ConnectionStrings__RabbitMQ=amqp://guest:guest@rabbitmq:5672/
+    depends_on:
+      - sqlserver
+      - rabbitmq
+
+  # Payments Service
+  payments-api:
+    build:
+      context: .
+      dockerfile: src/Services/Payments/Payments.Api/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=PaymentsDb;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=true;
+      - ConnectionStrings__RabbitMQ=amqp://guest:guest@rabbitmq:5672/
+    depends_on:
+      - sqlserver
+      - rabbitmq
+
+volumes:
+  sqlserver_data:
+  rabbitmq_data: 
