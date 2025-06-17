@@ -1,0 +1,12 @@
+/Users/kj/KPO/KPO_3/src/Services/Payments/Payments.Domain/bin/Debug/net8.0/Payments.Domain.deps.json
+/Users/kj/KPO/KPO_3/src/Services/Payments/Payments.Domain/bin/Debug/net8.0/Payments.Domain.dll
+/Users/kj/KPO/KPO_3/src/Services/Payments/Payments.Domain/bin/Debug/net8.0/Payments.Domain.pdb
+/Users/kj/KPO/KPO_3/src/Services/Payments/Payments.Domain/obj/Debug/net8.0/Payments.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/Users/kj/KPO/KPO_3/src/Services/Payments/Payments.Domain/obj/Debug/net8.0/Payments.Domain.AssemblyInfoInputs.cache
+/Users/kj/KPO/KPO_3/src/Services/Payments/Payments.Domain/obj/Debug/net8.0/Payments.Domain.AssemblyInfo.cs
+/Users/kj/KPO/KPO_3/src/Services/Payments/Payments.Domain/obj/Debug/net8.0/Payments.Domain.csproj.CoreCompileInputs.cache
+/Users/kj/KPO/KPO_3/src/Services/Payments/Payments.Domain/obj/Debug/net8.0/Payments.Domain.sourcelink.json
+/Users/kj/KPO/KPO_3/src/Services/Payments/Payments.Domain/obj/Debug/net8.0/Payments.Domain.dll
+/Users/kj/KPO/KPO_3/src/Services/Payments/Payments.Domain/obj/Debug/net8.0/refint/Payments.Domain.dll
+/Users/kj/KPO/KPO_3/src/Services/Payments/Payments.Domain/obj/Debug/net8.0/Payments.Domain.pdb
+/Users/kj/KPO/KPO_3/src/Services/Payments/Payments.Domain/obj/Debug/net8.0/ref/Payments.Domain.dll
