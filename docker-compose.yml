@@ -1,0 +1,95 @@
+version: '3.8'
+
+services:
+  # Infrastructure
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong@Passw0rd
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    networks:
+      - kpo-network
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - kpo-network
+
+  # Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - api-gateway
+    networks:
+      - kpo-network
+
+  # API Gateway
+  api-gateway:
+    build:
+      context: .
+      dockerfile: src/Gateway/ApiGateway/Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - orders-api
+      - payments-api
+    networks:
+      - kpo-network
+
+  # Orders Service
+  orders-api:
+    build:
+      context: .
+      dockerfile: src/Services/Orders/Orders.Api/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=OrdersDb;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True
+      - RabbitMQ__HostName=rabbitmq
+      - RabbitMQ__UserName=admin
+      - RabbitMQ__Password=admin
+    depends_on:
+      - sqlserver
+      - rabbitmq
+    networks:
+      - kpo-network
+
+  # Payments Service
+  payments-api:
+    build:
+      context: .
+      dockerfile: src/Services/Payments/Payments.Api/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=PaymentsDb;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True
+      - RabbitMQ__HostName=rabbitmq
+      - RabbitMQ__UserName=admin
+      - RabbitMQ__Password=admin
+    depends_on:
+      - sqlserver
+      - rabbitmq
+    networks:
+      - kpo-network
+
+volumes:
+  sqlserver_data:
+  rabbitmq_data:
+
+networks:
+  kpo-network:
+    driver: bridge 
