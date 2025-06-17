@@ -1,0 +1,375 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/kj/KPO/KPO_3/src/Services/Orders/Orders.Infrastructure/Orders.Infrastructure.csproj": {}
+  },
+  "projects": {
+    "/Users/kj/KPO/KPO_3/src/Services/Orders/Orders.Application/Orders.Application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/kj/KPO/KPO_3/src/Services/Orders/Orders.Application/Orders.Application.csproj",
+        "projectName": "Orders.Application",
+        "projectPath": "/Users/kj/KPO/KPO_3/src/Services/Orders/Orders.Application/Orders.Application.csproj",
+        "packagesPath": "/Users/kj/.nuget/packages/",
+        "outputPath": "/Users/kj/KPO/KPO_3/src/Services/Orders/Orders.Application/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/kj/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/Users/kj/KPO/KPO_3/src/Services/Orders/Orders.Domain/Orders.Domain.csproj": {
+                "projectPath": "/Users/kj/KPO/KPO_3/src/Services/Orders/Orders.Domain/Orders.Domain.csproj"
+              },
+              "/Users/kj/KPO/KPO_3/src/Shared/Shared.Contracts/Shared.Contracts.csproj": {
+                "projectPath": "/Users/kj/KPO/KPO_3/src/Shared/Shared.Contracts/Shared.Contracts.csproj"
+              },
+              "/Users/kj/KPO/KPO_3/src/Shared/Shared.Infrastructure/Shared.Infrastructure.csproj": {
+                "projectPath": "/Users/kj/KPO/KPO_3/src/Shared/Shared.Infrastructure/Shared.Infrastructure.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "MediatR": {
+              "target": "Package",
+              "version": "[12.2.0, )"
+            },
+            "Microsoft.Extensions.DependencyInjection.Abstractions": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Logging.Abstractions": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet@8/8.0.16/libexec/sdk/8.0.116/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/kj/KPO/KPO_3/src/Services/Orders/Orders.Domain/Orders.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/kj/KPO/KPO_3/src/Services/Orders/Orders.Domain/Orders.Domain.csproj",
+        "projectName": "Orders.Domain",
+        "projectPath": "/Users/kj/KPO/KPO_3/src/Services/Orders/Orders.Domain/Orders.Domain.csproj",
+        "packagesPath": "/Users/kj/.nuget/packages/",
+        "outputPath": "/Users/kj/KPO/KPO_3/src/Services/Orders/Orders.Domain/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/kj/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet@8/8.0.16/libexec/sdk/8.0.116/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/kj/KPO/KPO_3/src/Services/Orders/Orders.Infrastructure/Orders.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/kj/KPO/KPO_3/src/Services/Orders/Orders.Infrastructure/Orders.Infrastructure.csproj",
+        "projectName": "Orders.Infrastructure",
+        "projectPath": "/Users/kj/KPO/KPO_3/src/Services/Orders/Orders.Infrastructure/Orders.Infrastructure.csproj",
+        "packagesPath": "/Users/kj/.nuget/packages/",
+        "outputPath": "/Users/kj/KPO/KPO_3/src/Services/Orders/Orders.Infrastructure/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/kj/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/Users/kj/KPO/KPO_3/src/Services/Orders/Orders.Application/Orders.Application.csproj": {
+                "projectPath": "/Users/kj/KPO/KPO_3/src/Services/Orders/Orders.Application/Orders.Application.csproj"
+              },
+              "/Users/kj/KPO/KPO_3/src/Services/Orders/Orders.Domain/Orders.Domain.csproj": {
+                "projectPath": "/Users/kj/KPO/KPO_3/src/Services/Orders/Orders.Domain/Orders.Domain.csproj"
+              },
+              "/Users/kj/KPO/KPO_3/src/Shared/Shared.Infrastructure/Shared.Infrastructure.csproj": {
+                "projectPath": "/Users/kj/KPO/KPO_3/src/Shared/Shared.Infrastructure/Shared.Infrastructure.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Logging": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet@8/8.0.16/libexec/sdk/8.0.116/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/kj/KPO/KPO_3/src/Shared/Shared.Contracts/Shared.Contracts.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/kj/KPO/KPO_3/src/Shared/Shared.Contracts/Shared.Contracts.csproj",
+        "projectName": "Shared.Contracts",
+        "projectPath": "/Users/kj/KPO/KPO_3/src/Shared/Shared.Contracts/Shared.Contracts.csproj",
+        "packagesPath": "/Users/kj/.nuget/packages/",
+        "outputPath": "/Users/kj/KPO/KPO_3/src/Shared/Shared.Contracts/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/kj/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet@8/8.0.16/libexec/sdk/8.0.116/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/kj/KPO/KPO_3/src/Shared/Shared.Infrastructure/Shared.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/kj/KPO/KPO_3/src/Shared/Shared.Infrastructure/Shared.Infrastructure.csproj",
+        "projectName": "Shared.Infrastructure",
+        "projectPath": "/Users/kj/KPO/KPO_3/src/Shared/Shared.Infrastructure/Shared.Infrastructure.csproj",
+        "packagesPath": "/Users/kj/.nuget/packages/",
+        "outputPath": "/Users/kj/KPO/KPO_3/src/Shared/Shared.Infrastructure/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/kj/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/Users/kj/KPO/KPO_3/src/Shared/Shared.Contracts/Shared.Contracts.csproj": {
+                "projectPath": "/Users/kj/KPO/KPO_3/src/Shared/Shared.Contracts/Shared.Contracts.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Configuration": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Hosting": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Logging": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
+            "RabbitMQ.Client": {
+              "target": "Package",
+              "version": "[6.8.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet@8/8.0.16/libexec/sdk/8.0.116/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
