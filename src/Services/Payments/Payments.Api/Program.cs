@@ -8,6 +8,7 @@ using Payments.Infrastructure.Repositories;
 using Payments.Infrastructure.Services;
 using Shared.Contracts.Messages;
 using Shared.Infrastructure.MessageBus;
+using Shared.Infrastructure.Messaging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,9 +22,9 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
     {
-        policy.AllowAnyOrigin()
-              .AllowAnyMethod()
-              .AllowAnyHeader();
+        policy.WithOrigins("http://localhost:3000")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
     });
 });
 
@@ -50,6 +51,9 @@ builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 // Services
 builder.Services.AddScoped<IInboxService, InboxService>();
 builder.Services.AddScoped<IOutboxService, OutboxService>();
+
+// RabbitMQ
+builder.Services.AddRabbitMQ(builder.Configuration);
 
 // Message Bus (только если не InMemory)
 if (connectionString != "InMemory")

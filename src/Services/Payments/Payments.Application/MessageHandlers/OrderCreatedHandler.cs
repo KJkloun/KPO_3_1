@@ -9,8 +9,7 @@ namespace Payments.Application.MessageHandlers;
 
 /// <summary>
 /// Обработчик события OrderCreated из RabbitMQ.
-/// АЛГОРИТМ: Получили заказ → проверяем дубли → списываем деньги → логируем.
-/// Использую Transactional Inbox для предотвращения дублей обработки.
+/// Реализует семантику exactly-once через Transactional Inbox.
 /// </summary>
 public class OrderCreatedHandler
 {
@@ -32,29 +31,26 @@ public class OrderCreatedHandler
     }
 
     /// <summary>
-    /// Основная логика обработки заказа:
-    /// 1. Проверяем не обрабатывали ли уже это сообщение (Inbox pattern)
-    /// 2. Находим аккаунт пользователя
-    /// 3. Списываем деньги через Account.TryWithdraw()
-    /// 4. Сохраняем транзакцию + помечаем сообщение как обработанное
+    /// Обрабатывает событие создания заказа:
+    /// 1. Проверяет идемпотентность через Inbox
+    /// 2. Находит аккаунт пользователя
+    /// 3. Списывает средства
+    /// 4. Сохраняет транзакцию
     /// </summary>
     public async Task Handle(OrderCreated message, CancellationToken cancellationToken = default)
     {
-        var messageId = Guid.NewGuid(); // В реальности ID приходит из RabbitMQ headers
+        var messageId = Guid.NewGuid();
         
         try
         {
-            // STEP 1: Проверяем дубликаты (Idempotency через Inbox)
             if (await _inboxService.IsMessageProcessedAsync(messageId, cancellationToken))
             {
                 _logger.LogInformation("Message {MessageId} already processed, skipping", messageId);
                 return;
             }
 
-            // STEP 2: Сохраняем сообщение в Inbox (начинаем обработку)
             await _inboxService.SaveMessageAsync(messageId, message, cancellationToken);
 
-            // STEP 3: Находим аккаунт пользователя
             var account = await _accountRepository.GetByUserIdAsync(message.UserId, cancellationToken);
             if (account == null)
             {
@@ -63,7 +59,6 @@ public class OrderCreatedHandler
                 return;
             }
 
-            // STEP 4: Списываем деньги (бизнес-логика в доменной модели)
             var withdrawalSuccess = account.TryWithdraw(message.Amount);
             if (!withdrawalSuccess)
             {
@@ -72,7 +67,6 @@ public class OrderCreatedHandler
                 return;
             }
 
-            // STEP 5: Создаем транзакцию для истории
             var transaction = new Transaction(
                 account.Id,
                 TransactionType.Withdrawal,
@@ -81,7 +75,6 @@ public class OrderCreatedHandler
                 message.OrderId
             );
 
-            // STEP 6: Сохраняем все изменения атомарно
             await _accountRepository.UpdateAsync(account, cancellationToken);
             await _transactionRepository.AddAsync(transaction, cancellationToken);
             await _inboxService.MarkAsProcessedAsync(messageId, cancellationToken);
@@ -95,7 +88,7 @@ public class OrderCreatedHandler
         {
             _logger.LogError(ex, "Failed to process order {OrderId} for user {UserId}",
                 message.OrderId, message.UserId);
-            throw; // RabbitMQ will retry or send to DLQ
+            throw;
         }
     }
 } 

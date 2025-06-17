@@ -30,7 +30,6 @@
 
 ### Требования
 - Docker Desktop
-- .NET 8 SDK (для локальной разработки)
 
 ### Запуск системы
 
@@ -49,6 +48,7 @@ docker-compose ps
 ### Доступ к сервисам
 - **Frontend**: http://localhost:3000
 - **API Gateway**: http://localhost:8080
+- **Swagger UI**: http://localhost:8080/swagger
 - **RabbitMQ Management**: http://localhost:15672 (admin/admin)
 - **SQL Server**: localhost:1433 (sa/YourStrong@Passw0rd)
 
@@ -76,7 +76,24 @@ POST /api/orders                      # Создание заказа
 GET  /api/orders?userId={id}          # Список заказов пользователя
 ```
 
-## Мониторинг и отладка
+## Тестирование
+
+### Запуск тестов
+```bash
+# Запуск всех тестов
+dotnet test
+
+# Запуск тестов конкретного сервиса
+dotnet test src/Services/Orders/Orders.Tests
+dotnet test src/Services/Payments/Payments.Tests
+```
+
+### Покрытие кода
+- **Orders Service**: >70% покрытия
+- **Payments Service**: >70% покрытия
+- **Интеграционные тесты**: Проверка взаимодействия сервисов
+
+## Мониторинг
 
 ### Просмотр логов
 ```bash
@@ -95,55 +112,6 @@ docker-compose logs -f api-gateway
 3. Вкладка **Queues** - очереди сообщений
 4. Вкладка **Exchanges** - маршрутизация сообщений
 
-### Подключение к SQL Server
-```bash
-# Через Docker
-docker exec -it kpo_3-sqlserver-1 /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P YourStrong@Passw0rd
-
-# Через SQL Server Management Studio
-Server: localhost,1433
-Login: sa
-Password: YourStrong@Passw0rd
-```
-
-### Проверка таблиц
-```sql
--- Базы данных
-SELECT name FROM sys.databases WHERE name IN ('OrdersDb', 'PaymentsDb');
-
--- Таблицы Orders
-USE OrdersDb;
-SELECT * FROM Orders;
-SELECT * FROM OutboxMessages;
-
--- Таблицы Payments  
-USE PaymentsDb;
-SELECT * FROM Accounts;
-SELECT * FROM Transactions;
-SELECT * FROM InboxMessages;
-```
-
-## Режимы работы
-
-### Docker (Production)
-- **База данных**: SQL Server
-- **Сообщения**: RabbitMQ
-- **Асинхронность**: Включена
-- **Транзакции**: Полные гарантии
-
-### Local Development
-- **База данных**: InMemory
-- **Сообщения**: Отключены
-- **Асинхронность**: Отключена
-- **Использование**: Для отладки
-
-```bash
-# Локальный запуск (для разработки)
-cd src/Gateway/ApiGateway && dotnet run --urls=http://localhost:5000
-cd src/Services/Orders/Orders.Api && ASPNETCORE_ENVIRONMENT=Development dotnet run --urls=http://localhost:5001
-cd src/Services/Payments/Payments.Api && ASPNETCORE_ENVIRONMENT=Development dotnet run --urls=http://localhost:5002
-```
-
 ## Структура проекта
 
 ```
@@ -155,12 +123,14 @@ src/
 │   │   ├── Orders.Api/         # REST API
 │   │   ├── Orders.Application/ # Бизнес-логика (CQRS)
 │   │   ├── Orders.Domain/      # Доменная модель
-│   │   └── Orders.Infrastructure/ # Данные, Outbox
+│   │   ├── Orders.Infrastructure/ # Данные, Outbox
+│   │   └── Orders.Tests/       # Модульные тесты
 │   └── Payments/               # Сервис платежей
 │       ├── Payments.Api/       # REST API
 │       ├── Payments.Application/ # Бизнес-логика (CQRS)
 │       ├── Payments.Domain/    # Доменная модель
-│       └── Payments.Infrastructure/ # Данные, Inbox
+│       ├── Payments.Infrastructure/ # Данные, Inbox
+│       └── Payments.Tests/     # Модульные тесты
 └── Shared/                     # Общие компоненты
     ├── Shared.Contracts/       # Сообщения и контракты
     └── Shared.Infrastructure/  # RabbitMQ, Outbox/Inbox
@@ -174,11 +144,6 @@ docker-compose.yml              # Оркестрация контейнеров
 - Синхронная проверка через HTTP при создании заказа
 - Асинхронное списание через RabbitMQ после создания заказа
 - Идемпотентность операций
-
-### Упрощения
-- Account ID = User ID (единый идентификатор)
-- Автоматическое создание баз данных
-- Базовая обработка ошибок
 
 ### Гарантии
 - **Exactly-once processing** - Outbox/Inbox паттерны

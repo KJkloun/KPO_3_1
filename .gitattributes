@@ -1,0 +1,43 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# C# source files
+*.cs text diff=csharp
+
+# JavaScript/TypeScript files
+*.js text diff=javascript
+*.jsx text diff=javascript
+*.ts text diff=typescript
+*.tsx text diff=typescript
+
+# JSON files
+*.json text diff=json
+
+# YAML files
+*.yml text diff=yaml
+*.yaml text diff=yaml
+
+# HTML/CSS files
+*.html text diff=html
+*.css text diff=css
+*.scss text diff=css
+
+# Markdown files
+*.md text diff=markdown
+
+# Shell scripts
+*.sh text eol=lf
+*.bash text eol=lf
+
+# Windows scripts
+*.cmd text eol=crlf
+*.bat text eol=crlf
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.zip binary
+*.pdf binary 

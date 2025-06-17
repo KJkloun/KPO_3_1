@@ -1,16 +1,18 @@
 using Microsoft.EntityFrameworkCore;
 using Payments.Domain.Entities;
+using Payments.Domain.ValueObjects;
 using Shared.Infrastructure.Inbox;
 using Shared.Infrastructure.Outbox;
 
 namespace Payments.Infrastructure.Data;
 
 /// <summary>
-/// Контекст базы данных для Payments сервиса
+/// Контекст базы данных для сервиса платежей.
 /// </summary>
 public class PaymentsDbContext : DbContext
 {
-    public PaymentsDbContext(DbContextOptions<PaymentsDbContext> options) : base(options)
+    public PaymentsDbContext(DbContextOptions<PaymentsDbContext> options)
+        : base(options)
     {
     }
 
@@ -28,7 +30,7 @@ public class PaymentsDbContext : DbContext
         {
             entity.HasKey(e => e.Id);
             entity.Property(e => e.UserId).IsRequired();
-            entity.Property(e => e.Balance).HasColumnType("decimal(18,2)").IsRequired();
+            entity.Property(e => e.Balance).HasPrecision(18, 2).IsRequired();
             entity.Property(e => e.CreatedAt).IsRequired();
             entity.Property(e => e.UpdatedAt).IsRequired();
             entity.Property(e => e.Version).IsRequired().IsConcurrencyToken();
@@ -43,7 +45,7 @@ public class PaymentsDbContext : DbContext
             entity.Property(e => e.AccountId).IsRequired();
             entity.Property(e => e.OrderId);
             entity.Property(e => e.Type).IsRequired();
-            entity.Property(e => e.Amount).HasColumnType("decimal(18,2)").IsRequired();
+            entity.Property(e => e.Amount).HasPrecision(18, 2).IsRequired();
             entity.Property(e => e.Description).HasMaxLength(500);
             entity.Property(e => e.CreatedAt).IsRequired();
 
