@@ -36,7 +36,7 @@
 
 ```bash
 # Клонирование репозитория
-git clone https://github.com/KJkloun/KPO_3.git
+git clone https://github.com/KJkloun/KPO_3_1.git
 cd KPO_3
 
 # Запуск всей системы в Docker
